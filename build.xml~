@@ -1,0 +1,72 @@
+<project name="HelloWorldGDX" default="dist" basedir=".">
+  <description>
+    Primer test amb el framework GDX
+  </description>
+  <!--Propietats -->
+  <property name="src" location="src" />
+  <property name="build" location="build" />
+  <property name="dist" location="dist" />
+  <property name="graphics" location="graphics" />
+  <property name="lib" location="libs" />
+
+  <!--                                 ONE JAR                           -->
+  <property name="one-jar.dist.dir" value="/home/joel/lib/java/one-jar" />
+  <import file="${one-jar.dist.dir}/one-jar-ant-task.xml" optional="true" />
+  <!--                                 ONE JAR                           -->
+  
+  <target name="init">
+    <tstamp />
+    <mkdir dir="${build}" />
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${src}" destdir="${build}" 
+	   classpath="${lib}/gdx.jar:${lib}/gdx-natives.jar:${lib}/gdx-backend-jogl.jar:${lib}/gdx-backend-jogl-natives.jar" />
+  </target>
+
+  <target name="run" depends="compile">
+    <java classpath="${lib}/gdx.jar:${lib}/gdx-natives.jar:${lib}/gdx-backend-jogl.jar:${lib}/gdx-backend-jogl-natives.jar:${build}:${graphics}" className="org.cervellpixelat.farmparanoid.Game" fork="true" />
+  </target>
+
+  <target name="dist" depends="compile">
+    <mkdir dir="${dist}" />
+    <one-jar destfile="${dist}/farmparanoid-${DSTAMP}.jar" manifest="">
+      <!--<manifest>
+	<attribute name="Built-By" value="Joel Badia Escolà" />
+	<attribute name="Main-Class" 
+		   value="org.cervellpixelat.farmparanoid.Game" />
+	<attribute name="Class-Path"
+		   value=". gdx.jar gdx-natives.jar gdx-backend-jogl.jar gdx-backend-jogl-natives.jar" />
+      </manifest>
+      <main>
+	<fileset dir="${build}" />
+      </main>
+      <lib>
+	<fileset dir="${lib}/gdx.jar" />
+	<fileset dir="${lib}/gdx-natives.jar" />
+	<fileset dir="${lib}/gdx-backend-jogl.jar" />
+	<fileset dir="${lib}/gdx-backend-jogl-natives.jar" />
+      </lib>
+      <fileset>
+	<fileset dir="${lib}" />
+	<fileset dir="${graphics}" />
+      </fileset>-->
+    </one-jar>
+    <!--<jar jarfile="${dist}/farmparanoid-${DSTAMP}.jar" basedir="${dist}">
+      <fileset dir="${lib}" />
+      <fileset dir="${graphics}" />
+      <manifest>
+	<attribute name="Built-By" value="Joel Badia Escolà" />
+	<attribute name="Main-Class" 
+		     value="org.cervellpixelat.farmparanoid.Game" />
+	<attribute name="Class-Path"
+		   value=". gdx.jar gdx-natives.jar gdx-backend-jogl.jar gdx-backend-jogl-natives.jar" />
+      </manifest>
+    </jar>-->
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}" />
+    <delete dir="${dist}" />
+  </target>
+</project>

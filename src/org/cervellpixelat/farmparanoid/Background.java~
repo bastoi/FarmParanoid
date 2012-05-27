@@ -1,0 +1,58 @@
+package org.cervellpixelat.farmparanoid;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+public class Background extends Actor {
+
+    private Sprite background0;
+    private Sprite background1;
+    private Sprite background2;
+    private Sprite background3;
+    private float despX = 0f;
+    private int OFFSET = 256;
+    private int vel1 = 20;
+    private int vel2 = 1;
+    private int vel3 = 30;
+    
+    public Background (String name) {
+	super(name);
+	background0 = new Sprite(new Texture(Gdx.files.absolute("/home/joel/Imatges/cel_farmparanoid.png")));
+	background1 = new Sprite(new Texture(Gdx.files.absolute("/home/joel/Imatges/fons_desertic.png")));
+	background2 = new Sprite(new Texture(Gdx.files.absolute("/home/joel/Imatges/BackgroundPlains.png")));
+	background3 = new Sprite(new Texture(Gdx.files.absolute("/home/joel/Imatges/casa_farmparanoid.png")));
+	background1.setY(-100);
+	background1.setX((860/2)-(background1.getWidth()/2));
+	background2.setX((860/2)-(background2.getWidth()/2));
+	background3.setX((860/2)-(background3.getWidth()/2));
+    }
+    @Override
+	public void act(float deltaTime) {
+	if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
+	    background1.translateX(-vel1*deltaTime);
+	    background2.translateX(-vel2*deltaTime);
+	    background3.translateX(-vel3*deltaTime);
+	}
+	else if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
+	    background1.translateX(vel1*deltaTime);
+	    background2.translateX(vel2*deltaTime);
+	    background3.translateX(vel3*deltaTime);
+	}
+    }
+    @Override
+	public void draw(SpriteBatch batch, float alphaModulation) {
+	background0.draw(batch, alphaModulation);
+	background2.draw(batch, alphaModulation);
+	background1.draw(batch, alphaModulation);
+	background3.draw(batch, alphaModulation);
+    }
+
+    @Override
+	public Actor hit(float x, float y) {
+	return null;
+    }
+}
